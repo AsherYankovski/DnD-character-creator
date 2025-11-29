@@ -1,16 +1,23 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "cJSON.h"
-#include "cJSON.c"
 
 
-void end_programm(const char* message){
+/*typedef struct characteristic{
+	char *name;
+	int value;
+	int mod;
+} characteristic;
+*/
+
+void end_programm(const char *message){
 	printf("Unfortunately prgramm was aborted: %s\n", message);
 	exit(1);
 }
 
 
-const char* write_json_to_file(const char* json_str, const char* name){
+const char *write_json_to_file(const char *json_str, const char *name){
 	unsigned int n = strlen(name) + 5;
 	
 	char file_name[n];
@@ -51,7 +58,7 @@ int main(){
 	cJSON *json = cJSON_CreateObject();
 
 	write_characteristics(json/*, chars*/);
-	write_json_to_file(cJSON_Print(json), "");
+	write_json_to_file(cJSON_Print(json), "data");
 
 	cJSON_Delete(json);
 	return 0;
