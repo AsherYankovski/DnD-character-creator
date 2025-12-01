@@ -7,7 +7,7 @@
 
 char buffer = '\0';
 
-/* Добваление имени и создание объекта, в котором хранится класс */
+/* Р”РѕР±РІР°Р»РµРЅРёРµ РёРјРµРЅРё Рё СЃРѕР·РґР°РЅРёРµ РѕР±СЉРµРєС‚Р°, РІ РєРѕС‚РѕСЂРѕРј С…СЂР°РЅРёС‚СЃСЏ РєР»Р°СЃСЃ */
 cJSON *add_name(cJSON *object){
 	char name[NAME_MAX_LEN] = {'\0'};
 
@@ -16,7 +16,7 @@ cJSON *add_name(cJSON *object){
 	return cJSON_AddObjectToObject(object, name);
 }
 
-/* Добавление кости хитов */
+/* Р”РѕР±Р°РІР»РµРЅРёРµ РєРѕСЃС‚Рё С…РёС‚РѕРІ */
 void add_hit_dice(cJSON *object){
 	unsigned int value;
 
@@ -27,7 +27,8 @@ void add_hit_dice(cJSON *object){
 	cJSON_AddNumberToObject(object, "Hit Point Dice", value);
 }
 
-
+/* Р¤СѓРЅРєС†РёСЏ, Р·Р°РґР°СЋС‰Р°СЏ РІРѕРїСЂРѕСЃ, РЅР° РєРѕС‚РѕСЂС‹Р№ РїСЂРёРЅРёРјР°РµС‚СЃСЏ РѕС‚РІРµС‚ "Р”Р°" РёР»Рё "РќРµС‚"
+ * Р’РѕР·РІСЂР°С‰Р°РµС‚ 0 РёР»Рё 1 РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РѕС‚РІРµС‚Р° РїРѕР»Р·РѕРІР°С‚РµР»СЏ. РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІРѕР·РІСЂР°С‰Р°РµС‚ 0 */
 bool ask_YN(char *message){
 	while(1){
 		char input[8] = {'\0'};
@@ -53,16 +54,16 @@ bool ask_YN(char *message){
 }
 
 
-/* Блок добавления различных владений */
+/* Р‘Р»РѕРє РґРѕР±Р°РІР»РµРЅРёСЏ СЂР°Р·Р»РёС‡РЅС‹С… РІР»Р°РґРµРЅРёР№ */
 /*-------------------------------------------*/
-/* Владение бронёй */
+/* Р’Р»Р°РґРµРЅРёРµ Р±СЂРѕРЅС‘Р№ */
 void add_armor_proficencies(cJSON *object){
 	printf("\nAdd armor proficencies\n");
 
 	cJSON *armor = cJSON_AddObjectToObject(object, "Armor");
 	char string[MAX_INPUT_LEN] = {'\0'};
 
-/* Блок кода, отвечающий за наличие выбора
+/* Р‘Р»РѕРє РєРѕРґР°, РѕС‚РІРµС‡Р°СЋС‰РёР№ Р·Р° РЅР°Р»РёС‡РёРµ РІС‹Р±РѕСЂР°
 	bool variability = ask_YN("Dose armor proficencies variability?");
 	cJSON_AddBoolToObject(armor, "Choice", variability);
 	if (variability){
@@ -93,14 +94,14 @@ void add_armor_proficencies(cJSON *object){
 
 }
 
-/* Владение оружием */
+/* Р’Р»Р°РґРµРЅРёРµ РѕСЂСѓР¶РёРµРј */
 void add_weapon_proficencies(cJSON *object){
 	printf("\nAdd weapoon proficencies\n");
 
 	cJSON *weapoon = cJSON_AddObjectToObject(object, "Weapoon");
 	char string[MAX_INPUT_LEN] = {'\0'};
 
-/* Блок кода, отвечающий за наличие выбора
+/* Р‘Р»РѕРє РєРѕРґР°, РѕС‚РІРµС‡Р°СЋС‰РёР№ Р·Р° РЅР°Р»РёС‡РёРµ РІС‹Р±РѕСЂР°
 	bool variability = ask_YN("Dose weapoon proficencies variability?");
 	cJSON_AddBoolToObject(weapoon, "Choice", variability);
 	if (variability){
@@ -131,7 +132,7 @@ void add_weapon_proficencies(cJSON *object){
 
 }
 
-/* Владение инструментами */
+/* Р’Р»Р°РґРµРЅРёРµ РёРЅСЃС‚СЂСѓРјРµРЅС‚Р°РјРё */
 void add_tool_proficencies(cJSON *object){
 	printf("\nAdd tools proficencies\n");
 
@@ -167,14 +168,14 @@ void add_tool_proficencies(cJSON *object){
 
 }
 
-/* Владение спасбросками */
+/* Р’Р»Р°РґРµРЅРёРµ СЃРїР°СЃР±СЂРѕСЃРєР°РјРё */
 void add_SavingThrows_proficencies(cJSON *object){
 	printf("\nAdd saving throws proficencies\n");
 
 	cJSON *SavingThrows = cJSON_AddObjectToObject(object, "Saving throws");
 	char string[MAX_INPUT_LEN] = {'\0'};
 
-/* Блок кода, отвечающий за наличие выбора
+/* Р‘Р»РѕРє РєРѕРґР°, РѕС‚РІРµС‡Р°СЋС‰РёР№ Р·Р° РЅР°Р»РёС‡РёРµ РІС‹Р±РѕСЂР°
 	bool variability = ask_YN("Dose saving throws proficencies variability?");
 	cJSON_AddBoolToObject(Saving throws, "Choice", variability);
 	if (variability){
@@ -204,14 +205,14 @@ void add_SavingThrows_proficencies(cJSON *object){
 	}
 }
 
-/* Владение навыками */
+/* Р’Р»Р°РґРµРЅРёРµ РЅР°РІС‹РєР°РјРё */
 void add_skill_proficencies(cJSON *object){
 	printf("\nAdd skills proficencies\n");
 
 	cJSON *skill = cJSON_AddObjectToObject(object, "Skills");
 	char string[MAX_INPUT_LEN] = {'\0'};
 
-	bool variability = ask_YN("Dose skill proficencies variability?");
+	bool variability = ask_YN("Dose skill proficencies have variability?");
 	cJSON_AddBoolToObject(skill, "Choice", variability);
 	if (variability){
 		unsigned int variants = 0;
@@ -239,10 +240,11 @@ void add_skill_proficencies(cJSON *object){
 	}
 }
 
-/* Добавление всех владений к объекту персонажа */
+/* Р”РѕР±Р°РІР»РµРЅРёРµ РІСЃРµС… РІР»Р°РґРµРЅРёР№ Рє РѕР±СЉРµРєС‚Сѓ РїРµСЂСЃРѕРЅР°Р¶Р° */
 void add_proficiencies(cJSON *object){
 	cJSON *proficencies = cJSON_AddObjectToObject(object, "Proficencies");
 
+	printf("\n\nAdd poficiences\n");
 	add_armor_proficencies(proficencies);
 	add_weapon_proficencies(proficencies);
 	add_tool_proficencies(proficencies);
@@ -252,34 +254,70 @@ void add_proficiencies(cJSON *object){
 /*-------------------------------------------*/
 
 
-/* Добавление объекта, создержащего класс.
- * Заполнение информации о классе */
-cJSON *add_class(cJSON *object){
-	unsigned int buffer_num;
+/*-------------------------------------------*/
+/* Р¤СѓРЅРєС†РёСЏ РґРѕР±Р°Р»РµРЅРёСЏ .СЌР»РµРјРµРЅС‚Р° РїРѕР·РёС†РёРё */
+bool add_item(cJSON *array){
+	printf("Write item name\n");
+	char string[MAX_INPUT_LEN*2 + 3] = {'\0'};
+	char name[MAX_INPUT_LEN] = {'\0'};
 
+	scanf("%[^\n]%*c", name);
+
+	bool expl = ask_YN("Add comment?");
+	if (expl){
+		char comment[MAX_INPUT_LEN] = {'\0'};
+
+		scanf("%[^\n]%*c", comment);
+		sprintf(string, "%s (%s)", name, comment);
+	}else{
+		sprintf(string, "%s", name);
+	}
+
+	cJSON *item = cJSON_CreateString(string);
+	cJSON_AddItemToArray(array, item);
+}
+
+
+/* С„СѓРЅРєС†РёСЏ РґРѕР±Р°Р»РµРЅРёСЏ РѕРґРЅРѕР№ РїРѕР·РёС†РёРё РІС‹Р±СЂР° СЃРЅР°СЂСЏР¶РµРЅРёСЏ */
+void add_position(cJSON *array){
+	printf("Add equipment position to eqiupment list.\n");
+	cJSON *position = cJSON_CreateObject();
+	cJSON_AddItemToArray(array, position);
+
+	bool variability = ask_YN("Dose this position have variability?");
+	cJSON_AddBoolToObject(position, "Choice", variability);
+
+	cJSON *values = cJSON_AddArrayToObject(position, "Values");
+
+	add_item(values);
+	while(ask_YN("Add new item?")){
+		add_item(values);
+	}
+}
+
+
+/* Р¤СѓРЅРєС†РёСЏ РґРѕР±Р°РІР»РµРЅРёСЏ СЃРЅР°СЂСЏР¶РµРЅРёСЏ, РєРѕС‚РѕСЂРѕРµ РїРѕР»СѓС‡Р°РµС‚ РєР»Р°СЃСЃ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ */
+void add_equipment(cJSON *object){
+	printf("\n\nAdd equipment to class.\n");
+	
+	cJSON *equipment = cJSON_AddArrayToObject(object, "Equipment");
+
+	add_position(equipment);
+	while(ask_YN("Add new position?")){
+		add_position(equipment);
+	}
+}
+/*-------------------------------------------*/
+
+
+/* Р”РѕР±Р°РІР»РµРЅРёРµ РѕР±СЉРµРєС‚Р°, СЃРѕРґРµСЂР¶Р°С‰РµРіРѕ РєР»Р°СЃСЃ.
+ * Р—Р°РїРѕР»РЅРµРЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РєР»Р°СЃСЃРµ */
+cJSON *add_class(cJSON *object){
 	cJSON *class = add_name(object);
 
 	add_hit_dice(class);
 	add_proficiencies(class);
+	add_equipment(class);
 
 	return class;
-}
-
-
-int main(void){
-
-	cJSON *json = cJSON_CreateObject();
-	add_class(json);
-
-	FILE *fp = fopen("test.json", "w");
-
-	char *buffer_b = cJSON_Print(json);
-
-	fputs(buffer_b, fp);
-	
-	fclose(fp);
-	cJSON_Delete(json);
-//	printf("Debug\n");
-
-	return 0;
 }
