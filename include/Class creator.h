@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #include "cJSON.h"
 
-#define NAME_MAX_LEN 16
+#define MAX_NAME_LEN 16
+#define MAX_DESCRIPTION_LEN 2048
 #define MAX_INPUT_LEN 64
 
 char buffer = '\0';
 
 /* Добваление имени и создание объекта, в котором хранится класс */
 cJSON *add_name(cJSON *object){
-	char name[NAME_MAX_LEN] = {'\0'};
+	char name[MAX_NAME_LEN] = {'\0'};
 
 	printf("Enter new class name: ");
 	scanf("%[^\n]%*c", name);
@@ -255,43 +256,28 @@ void add_proficiencies(cJSON *object){
 
 
 /*-------------------------------------------*/
-/* Функция добаления .элемента позиции */
-bool add_item(cJSON *array){
-	printf("Write item name\n");
-	char string[MAX_INPUT_LEN*2 + 3] = {'\0'};
-	char name[MAX_INPUT_LEN] = {'\0'};
-
-	scanf("%[^\n]%*c", name);
-
-	bool expl = ask_YN("Add comment?");
-	if (expl){
-		char comment[MAX_INPUT_LEN] = {'\0'};
-
-		scanf("%[^\n]%*c", comment);
-		sprintf(string, "%s (%s)", name, comment);
-	}else{
-		sprintf(string, "%s", name);
-	}
-
-	cJSON *item = cJSON_CreateString(string);
-	cJSON_AddItemToArray(array, item);
-}
-
-
 /* функция добаления одной позиции выбра снаряжения */
-void add_position(cJSON *array){
-	printf("Add equipment position to eqiupment list.\n");
-	cJSON *position = cJSON_CreateObject();
-	cJSON_AddItemToArray(array, position);
+void add_list(cJSON *array){
 
-	bool variability = ask_YN("Dose this position have variability?");
-	cJSON_AddBoolToObject(position, "Choice", variability);
+	cJSON *list = cJSON_CreateObject();
+	cJSON_AddItemToArray(array, list);
+	char string[MAX_INPUT_LEN] = {'\0'};
 
-	cJSON *values = cJSON_AddArrayToObject(position, "Values");
+	bool variability = ask_YN("Dose this list have varaiti?");
 
-	add_item(values);
-	while(ask_YN("Add new item?")){
-		add_item(values);
+	cJSON_AddBoolToObject(list, "Choice", variability);
+	cJSON *values = cJSON_AddArrayToObject(list, "Values");
+
+	while (1){
+		if (!scanf("%[^\n]%*c", string)){
+			scanf("%c", &buffer);
+		}
+
+		if(string[0] == '0'){
+			return;
+		}
+	cJSON *item = cJSON_CreateString(string);
+	cJSON_AddItemToArray(values, item);
 	}
 }
 
@@ -302,9 +288,11 @@ void add_equipment(cJSON *object){
 	
 	cJSON *equipment = cJSON_AddArrayToObject(object, "Equipment");
 
-	add_position(equipment);
+	add_list(equipment);
+	printf("\n");
 	while(ask_YN("Add new position?")){
-		add_position(equipment);
+		add_list(equipment);
+		printf("\n");
 	}
 }
 /*-------------------------------------------*/
