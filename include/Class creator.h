@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "cJSON.h"
 
 #define MAX_NAME_LEN 16
@@ -13,7 +11,12 @@ cJSON *add_name(cJSON *object){
 	char name[MAX_NAME_LEN] = {'\0'};
 
 	printf("Enter new class name: ");
-	scanf("%[^\n]%*c", name);
+	while (!scanf("%[^\n]%*c", name)){
+		scanf("%c", &buffer);
+		printf("No empty names allowed!\n");
+		printf("Enter new class name: ");
+	}
+
 	return cJSON_AddObjectToObject(object, name);
 }
 
@@ -263,7 +266,7 @@ void add_list(cJSON *array){
 	cJSON_AddItemToArray(array, list);
 	char string[MAX_INPUT_LEN] = {'\0'};
 
-	bool variability = ask_YN("Dose this list have varaiti?");
+	bool variability = ask_YN("Dose list have varaity?");
 
 	cJSON_AddBoolToObject(list, "Choice", variability);
 	cJSON *values = cJSON_AddArrayToObject(list, "Values");
@@ -284,13 +287,13 @@ void add_list(cJSON *array){
 
 /* Функция добавления снаряжения, которое получает класс по умолчанию */
 void add_equipment(cJSON *object){
-	printf("\n\nAdd equipment to class.\n");
+	printf("\n\nAdd equipment lists to class.\n");
 	
 	cJSON *equipment = cJSON_AddArrayToObject(object, "Equipment");
 
 	add_list(equipment);
 	printf("\n");
-	while(ask_YN("Add new position?")){
+	while(ask_YN("Add new list?")){
 		add_list(equipment);
 		printf("\n");
 	}
